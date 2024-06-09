@@ -8,11 +8,26 @@ function App() {
   const [description, setDescription] = useState('');
   const [dateTime, setDateTime] = useState('');
 
+  function addNewTransaction(ev){
+    ev.preventDefault();
+    const url = import.meta.env.VITE_API_URL;
+    console.log(url);
+    fetch(url, {
+      method: 'POST',
+      headers: {'Content-type':'application/json'},
+      body: JSON.stringify({name,description,dateTime})
+    }).then(response => {
+      response.json().then(json => {
+        console.log('result', json)
+      })
+    })
+  }
+
   return (
     <main>
       <h1>$400<span>.00</span></h1>
 
-      <form>
+      <form onSubmit={addNewTransaction}>
         <div className='basic'>
           <input type="text"
                  placeholder={'+200$ Samm'}
